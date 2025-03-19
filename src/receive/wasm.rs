@@ -16,7 +16,7 @@ use {
   wasm_bindgen::prelude::*,
   wasm_bindgen::JsValue,
   web_sys::console,
-  // web_sys::js_sys::Date,
+  web_sys::js_sys::Date,
 };
 
 
@@ -66,12 +66,11 @@ impl Receiver {
           .require_network(network)
           .map_err(|_| wasm_bindgen::JsError::new("Address network mismatch"))?;
 
-      Ok(payjoin::receive::v2::Receiver::new(//new_with_time(
+      Ok(payjoin::receive::v2::Receiver::new_with_time(
           address,
           directory.into(),
           ohttp_keys.into(),
-          ohttp_relay.into(),
-          // js_sys::Date::now(),
+          Date::now(),
           expire_after.map(Duration::from_secs)
       )
       .into())
